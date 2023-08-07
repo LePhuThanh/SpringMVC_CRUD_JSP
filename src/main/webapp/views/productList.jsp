@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Category list</title>
+        <title>Product list</title>
         <style>
             table,
             th,
@@ -17,29 +17,32 @@
     </head>
 
     <body>
-        <h1>Category</h1>
-        <!-- <h3>name = ${name}, age = ${age}</h3> -->
-        <!-- display categories -->
+        <h1>Product</h1>
+        <!-- display products -->
         <table>
             <tr>
-                <th>Category ID</th>
+                <th>Product ID</th>
                 <th>Name</th>
+                <th>Price</th>
                 <th>Description</th>
-                <th>Actions</th>
             </tr>
-            <c:forEach var="category" items="${categories}">
+            <c:forEach var="product" items="${products}">
                 <tr>
-                    <td>${category.getCategoryID()}</td>
-                    <td>${category.getCategoryName()}</td>
-                    <td>${category.getDescription()}</td>
+                    <td>${product.getProductID()}</td>
+                    <td>${product.getProductName()}</td>
+                    <td>$${product.getPrice()}</td>
+                    <td>${product.getDescription()}</td>
                     <td>
-                        <a href="products/getProductByCategoryID/${category.getCategoryID()}">
-                            Show products
+                        <a href="../../products/changeCategory/${product.getProductID()}">
+                            Assign this Product to other Category
                         </a>
                     </td>
                 </tr>
             </c:forEach>
         </table>
+        <a href="../../categories">
+            Back
+        </a>
     </body>
 
     </html>
