@@ -40,6 +40,7 @@
                 </tr>
             </c:forEach>
         </table>
+        <a href ="products/insertProduct" >Insert new Product</a>
     </body>
 
     </html>

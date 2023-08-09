@@ -59,7 +59,13 @@
                 </form:select>
                 <input type="submit" value="Update" />
             </form:form>
-
+            <form:form
+                    method="POST"
+                    action="/api/v1/products/deleteProduct/${product.getProductID()}"
+                    onsubmit="return confirm('Are you sure you want to delete this Product?') ? true: false"
+                    >
+                    <input type="submit" value="Delete"/>
+                </form:form>
 
         </body>
 </html>

@@ -52,5 +52,7 @@ COMMIT;
 /*check table*/ 
 SELECT* FROM categories;
 SELECT* FROM products;
+/*change size of producyID*/ 
+
 
  
