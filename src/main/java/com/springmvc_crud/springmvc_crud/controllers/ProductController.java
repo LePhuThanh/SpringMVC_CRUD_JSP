@@ -9,8 +9,10 @@ import com.springmvc_crud.springmvc_crud.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -37,27 +39,33 @@ public class ProductController {
         Optional<Product> product = productRepository.findById(productID); // To get getProductName // maybe NULL
         modelMap.addAttribute("categories", categories);
         modelMap.addAttribute("product", product.get());
-        return "assign";
+        return "updateProduct";
     }
 
     // http:localhost:8080/api/v1/products/updateProduct/{productID}
     @PostMapping(value = "/updateProduct/{productID}")
     public String updateProduct(ModelMap modelMap,
-                                @ModelAttribute("product") Product product, // update new value
+                                @Valid @ModelAttribute("product") Product product, // update new value
+                                BindingResult bindingResult, //validation
                                 @PathVariable String productID) {
         //check condition + update
-
+        if(bindingResult.hasErrors()) {
+//            System.out.println("hoho");
+            modelMap.addAttribute("categories", categoryRepository.findAll());
+            return "updateProduct";
+        }
         if(productRepository.findById(product.getProductID()).isPresent()) {
 
             Product foundProduct = productRepository
                     .findById(product.getProductID()).get();
-            if (product.getProductName() != null) {
+            if (!product.getProductName().trim().isEmpty()) {
                 foundProduct.setProductName(product.getProductName());
             }
-            if(product.getCategoryID() != null) {
+            if(!product.getCategoryID().isEmpty()) {
                 foundProduct.setCategoryID(product.getCategoryID());
             }
-            if(product.getDescription() != null) {
+            //isEmpty => "" or NULL
+            if(!product.getDescription().trim().isEmpty()) {
                 foundProduct.setDescription(product.getDescription());
             }
             if(product.getPrice() > 0) {
